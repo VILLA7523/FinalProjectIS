@@ -9,101 +9,32 @@
 </p>
 
 
-## Contexto
-Debido a la coyuntura actual generada por el virus SARS COV-2, las clases virtuales se ha vuelto un estándar a nivel mundial, esto nos llevó a poder redefinir las maneras de como realizar muchas de nuestras actividades, algunas con mayor facilidad y otras que sean dificultados.
+## PRÁCTICA 9: ESTILOS DE LA PROGRAMACIÓN
 
-Como sabemos la época actual exige personas altamente cualificadas, capaces de adaptarse a los cambios constantes y de innovar, no solo para garantizar su sostenibilidad y su éxito en el mercado mundial, sino también para promover el crecimiento económico. 
+### Estilo 1 - Letterbox
 
-Hasta ahora, hay indicios de que la asistencia regular contribuye al éxito de los estudiantes no sólo en el marco escolar sino también en la vida real. Sin embargo, los datos revelan que un alto porcentaje de estudiantes abandona la universidad, lo que significa que varios candidatos de gran potencial no continúan sus estudios . Además, parece que se ha prestado poca atención a la importancia de la asistencia de los alumnos y a su repercusión en el rendimiento escolar.
+#### Descripción
+- El problema más grande se descompone en 'cosas' que tienen sentido para el dominio del problema.
+- Cada 'cosa' es una cápsula de datos que expone un solo procedimiento, a saber, la capacidad de recibir y enviar mensajes que se le envían.
+- El envío de mensajes puede resultar en el envío del mensaje a otra cápsula.
 
-En uno de los intentos de poder solucionar este problema se generó la asistencia, con el fin de llevar registro de las personas que debieran estar atendiendo a clases, más por la pandemia este sistema ha sido modificado y adaptado en la mayoría de los casos por formas estáticas como llenar un pequeño formulario o el llamado de una lista. 
-
-Esto genera mucho tiempo perdido, siendo un proceso muy ineficiente para el aprendizaje, antes esta situación nos planteamos como podemos optimizar y agilizar este proceso.
-
-
-## ¿Qué es Scooby Attendance?
-El proceso de control de la asistencia en cualquier institución es una parte importante para determinar la eficacia de los servicios ofrecidos por la misma y el interés general de quienes se benefician de los servicios de la institución, en nuestro caso, los estudiantes. Este proceso es una rutina engorrosa, y por ello, el presente artículo propone una nueva forma de reemplazar el antiguo sistema, que implica registros de asistencia que tienen que ser llenados uno por uno para cada alumno, ya que este método requiere mucho tiempo y es propenso a cometer errores, ya sea marcando a un alumno como ausente por error o contando un número erróneo de asistencias cuando hay que entregar informes o estadísticas.
-
-## Objetivos
-
-### Objetivo General
-Renovar completamente el proceso de toma de asistencia para los docentes y estudiantes de la universidad, haciéndolo mas eficiente y ahorrando tiempo.
-### Objetivos Específicos
-* *Implementar el uso de marcadores biométricos.*
-* *Integrar plataformas móviles con plataformas web*
-* *Poner en funcionamiento bases de datos y servidores que funcione conjuntamente con la aplicación.*
-* *Estudiar el desarrollo de aplicaciones Android y aplicaciones web.*
-* *Disminuir la carga laboral del personal docente y administrativo.*
-
-## Propuesta
-La asistencia es una de las tareas administrativas que deben realizarse al comienzo de cada clase. Esto conlleva a la pérdida de tiempo valioso al comienzo de  la clase que es aproximadamente el 10\% de la misma y a veces es difícil de gestionar. Es por ello que es necesaria la elaboración de una aplicación móvil y web que utilice métodos de identificación biométrica y de identificación convencional, aplicando el uso de base de datos relaciones junto con la implementación de APIs; además el uso de una plataforma web desde donde se podrá administrar la aplicación, mostrar estadísticas de los estudiantes y de las clases en general utilizando tecnologías modernas como son HTML5, CSS, Javascript, Web Services, Base de datos relacional. 
-
-## Beneficios
-* **Ahorrar tiempo**: Con nuestro sistema tendremos un único punto de referencia para los registros de asistencia de toda la universidad. No es necesario utilizar los tradicionales múltiples registros.
-* **Aumentar la precisión:** Con el sistema se reduce drásticamente el error humano y los profesores pueden justificar eficientemente inasistencias o tardanza.
-* **Garantizar la integridad de los datos:** En comparación con los anticuados registros en papel o excel que pueden perderse, destruirse o eliminarse accidentalmente, sus registros de asistencia están seguros; y disponibles en la nube.
-* **Mejorar la productividad de las clases:** Ya que no se perderá tiempo en la toma de asistencia.
-* **Reducir el trabajo administrativo:** Los registros y estadísticas estarán disponibles al instante.
-* **Disminuir los costes administrativos:** Que requieren gasto de tiempo y trabajo repetitivo.
-
-## Impacto Social
-La iniciativa tiene repercusiones positivas para:
-**Estudiantes:** Reducción del el absentismo, aumentar la puntualidad, mejorar la concentración, la retención, el rendimiento y el éxito.
-**Docentes:** Gestionar y mantener la asistencia ya no es una molestia. Toma de asistencia rápida y eficiente.
-**Dirección de las Escuelas y Facultades:** El equipo directivo recibe informes de asistencia generados automáticamente al final de cada día.
+#### Fragmento de código
+![image](https://user-images.githubusercontent.com/79772873/185766980-a6ee77f6-3e46-4e2d-be25-21d34f6fce47.png)
 
 
-## Diagrama de Clases
+### Estilo 2 - Tantrum
 
-<p align="center">
-  <img src="https://github.com/MrsblR/FinalProjectIS/blob/main/Evidences/D02.jpg" alt="Sublime's custom image"/>
-</p>
+#### Descripción
+- Cada procedimiento y función verifica la cordura de sus argumentos y se niega a continuar cuando los argumentos no son razonables.
+- Todos los bloques de código verifican todos los posibles errores, posiblemente imprimen mensajes específicos del contexto cuando ocurren errores y pasan los errores a la cadena de llamadas de función
 
-## Diagrama de Casos de Uso
-
-<p align="center">
-  <img src="https://github.com/MrsblR/FinalProjectIS/blob/main/Evidences/D01.jpeg" alt="Sublime's custom image"/>
-</p>
+#### Fragmento de código
+![image](https://user-images.githubusercontent.com/79772873/185767788-aeeb7a7d-4084-45cd-93f0-4b721a7de161.png)
 
 
-## Wireframes
-Para las diagramamaciones de las se utilizó Figma
+### Estilo 3 - Aspects
 
-**Link APP:** -  [Versión App](https://www.figma.com/file/98YCTCsRYmb6R7Mibg79dR/Scooby-Attendance?node-id=0%3A1)
-**Link WEB** - [Versión Web](https://www.figma.com/file/VvYuJi1rbh2pscG7iIGO3n/Admin-Dashboard)
+#### Descripción
+- El problema se descompone utilizando alguna forma de abstracción (procedimientos, funciones, objetos, etc.)
+- Los aspectos del problema se agregan al programa principal sin editar el código fuente de las abstracciones. Estas funciones secundarias se aferran a las abstracciones principales nombrándolas, como en "Soy un aspecto de foo (¡aunque puede que foo no lo sepa!)".
 
-
-## Funcionalidades
-
- - [ ] Iniciar sesión.
- - [ ] Cerrar sesión.
- - [ ] Asignar curso a estudiante.
- - [ ] Ver estadísticas de asistencia.
- - [ ] Generar reportes.
- - [ ] Crear curso.
- - [ ] Editar curso.
- - [ ] Eliminar curso.
- - [ ] Crear horario.
- - [ ] Editar horario.
- - [ ] Eliminar horario.
- - [ ] Ver cursos.
- - [ ] Ver horarios.
- - [ ] Marcar asistencia.
- - [ ] Ver asistencia por curso
-
-
-
-
-## 📝 Para inicializar el proyecto WEB
-Ejecute primero los siguientes comandos
-```
-cd attendance
-npm install
-npm run dev
-```
-
-## 📝 Para inicializar el proyecto Android
-Ejecute primero los siguientes comandos
-```
-emulator -avd scooby
-```
