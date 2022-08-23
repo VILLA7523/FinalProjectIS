@@ -98,6 +98,7 @@ _1. Respetando las reglas de nombre , podemos observar en la sigueinte imagen qu
 
 #### Fragmento de Código
 _1 - Uso de variables de entorno uso del código [Click aqui](https://github.com/VILLA7523/FinalProjectIS/blob/main/Application/src/config/dbconnections.js)
+
 ![image](https://user-images.githubusercontent.com/79772873/186261145-152e92dd-0ea5-49cf-8ca1-ea2822687627.png)
 
 ### Clean Code 4 - Reglas de funciones
@@ -111,6 +112,7 @@ _1 - Uso de variables de entorno uso del código [Click aqui](https://github.com
 
 #### Fragmento de Código
 _1 El nombre de las funciones son descriptivas , además en todas las funciones realizadas los parametros no exceden de 7 parámetros referente en el código en [Click aqui](https://github.com/VILLA7523/FinalProjectIS/blob/main/Application/src/domain/repository/base.repository.js)_
+
 ![image](https://user-images.githubusercontent.com/79772873/186263098-2abaf811-5074-41f6-99dd-44c702e15ac0.png)
 
 
@@ -129,5 +131,7 @@ _1 El nombre de las funciones son descriptivas , además en todas las funciones 
 ### Fragmento de código
 
 ![image](https://user-images.githubusercontent.com/79772873/186264910-72737056-ae92-422f-9a7c-00c9bf9653d3.png)
+
 ![image](https://user-images.githubusercontent.com/79772873/186265001-77c45102-206c-4007-a4cd-7377655dd876.png)
+
 ![image](https://user-images.githubusercontent.com/79772873/186265155-43317f51-da47-4f91-8768-f7ba28495e95.png)
