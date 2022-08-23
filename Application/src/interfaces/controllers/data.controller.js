@@ -76,6 +76,7 @@ class DataController {
     return data;
   }
 
+  //Obtiene todas las secciones existentes 
   async getAllSection() {
     const instanceSectionRepository = new SectionRepository(sectionDb);
     const instanceSectionService = new SectionService(
@@ -89,6 +90,7 @@ class DataController {
     return data;
   }
 
+  //Obtiene la ciudad por filtro de nombre
   async findCityByName(name) {
     const instanceCityRepository = new CityRepository(cityDb);
     const instanceCityService = new CityService(instanceCityRepository);
@@ -100,6 +102,7 @@ class DataController {
     return data;
   }
 
+  //Obtiene la ciudad por filtro de Id 
   async findCityById(id) {
     const instanceCityRepository = new CityRepository(cityDb);
     const instanceCityService = new CityService(instanceCityRepository);
