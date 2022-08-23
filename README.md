@@ -135,3 +135,13 @@ _1 El nombre de las funciones son descriptivas , además en todas las funciones 
 ![image](https://user-images.githubusercontent.com/79772873/186265001-77c45102-206c-4007-a4cd-7377655dd876.png)
 
 ![image](https://user-images.githubusercontent.com/79772873/186265155-43317f51-da47-4f91-8768-f7ba28495e95.png)
+
+### Clean Code - 7 Capitalize SQL Special Words
+#### Descripción
+- La interacción con la base de datos es una parte importante de la mayoría de las aplicaciones web. Si está escribiendo consultas SQL sin procesar, es una buena idea mantenerlas legibles también.
+- Aunque las palabras especiales de SQL y los nombres de funciones no distinguen entre mayúsculas y minúsculas, es una práctica común usar mayúsculas para distinguirlos de los nombres de tablas y columnas.
+
+Fragmento de Código
+
+![image](https://user-images.githubusercontent.com/79772873/186266190-ee8f3091-9f82-443a-a969-9f538cdccf8f.png)
+
