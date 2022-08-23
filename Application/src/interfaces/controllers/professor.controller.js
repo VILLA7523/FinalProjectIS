@@ -37,19 +37,20 @@ const CourseStudentsService = require("../../aplication/services/courseStudents.
 const CourseStudentsRepository = require("../../domain/repository/courseStudents.repository");
 
 class ProfessorController {
+  // Se obtiene información de todos los profesores 
   async getAll() {
     const instanceProfessorRepository = new ProfessorRepository(professorDb);
     const instanceProfessorService = new ProfessorService(
       instanceProfessorRepository
     );
-    const result = instanceProfesorService.getAll();
-    const data = await result.catch((err) => {
-      console.log("Professor Controller Error", err);
+    const dataProfessor = await instanceProfessorService.getAll().catch((err) => {
+      console.erro("Professor Controller Error", err);
       return null;
     });
-    return data;
+    return dataProfessor;
   }
 
+  // Se busca por el filtro de code del profesor 
   async findBydCode(code) {
     const instanceProfessorRepository = new ProfessorRepository(professorDb);
     const instanceProfessorService = new ProfessorService(
@@ -63,6 +64,7 @@ class ProfessorController {
     return data;
   }
 
+  // El profesor vincula un estudiante a uno de sus cursos
   async studentInscription(StudentID, CourseID) {
     const instanceInscriptionRepository = new InscriptionRepository(
       inscriptionDb
@@ -94,6 +96,7 @@ class ProfessorController {
     return data;
   }
 
+  // El profesor srea un horario para un curso
   async createSchedule(Day, Start, Finish, CourseID) {
     const instanceSheduleRepository = new SheduleRepository(sheduleDb);
     const instanceSheduleService = new SheduleService(
@@ -112,6 +115,7 @@ class ProfessorController {
     return data;
   }
 
+  //Obtiene el horario de un curso 
   async getSchedule(CourseID) {
     const instanceSheduleRepository = new SheduleRepository(sheduleDb);
     const instanceSheduleService = new SheduleService(
@@ -125,6 +129,7 @@ class ProfessorController {
     return data;
   }
 
+  //Crea un curso
   async createCourse(Course_Name, SectionID, TypeID, ProfessorID, Semestre) {
     const instanceCourseRepository = new CourseRepository(courseDb);
     const instanceCourseService = new CourseService(instanceCourseRepository);
@@ -143,6 +148,7 @@ class ProfessorController {
     return data;
   }
 
+  //Se crea la persona , una vez creada se crea el professor , para después crear el login 
   async register(obj) {
     const instancePersonRepository = new PersonRepository(personDb);
     const instancePersonService = new PersonService(instancePersonRepository);
@@ -155,31 +161,28 @@ class ProfessorController {
     const instanceLoginRepository = new LoginRepository(loginDb);
     const instanceLoginService = new LoginService(instanceLoginRepository);
 
-    const result = instancePersonService.create(obj);
+    const dataId = await instancePersonService.create(obj)
+      .catch((err) => {
+        console.log("Professor Controller Error", err);
+        return null;
+      });
 
-    const dataId = await result.catch((err) => {
-      console.log("Professor Controller Error", err);
-      return null;
-    });
+    const dataProfessor = await instanceProfessorService.create(obj)
+      .catch((err) => {
+        console.log("Professor Controller Error", err);
+        return null;
+      });
 
-    const resultProfessor = instanceProfessorService.create(obj);
+    const dataLogin = await instanceLoginService.create({ Email, Password, idDNI })
+      .catch((err) => {
+        console.log("Professor Controller Error", err);
+        return null;
+      });
 
-    const dataProfessor = await resultProfessor.catch((err) => {
-      console.log("Professor Controller Error Professor", err);
-      return null;
-    });
-
-    console.log("Se creo el profito -------------->", dataProfessor);
-    const resultLogin = instanceLoginService.create({ Email, Password, idDNI });
-    const dataLogin = await resultLogin.catch((err) => {
-      console.log("Professor Controller Error", err);
-      return null;
-    });
-
-    console.log("Se creo el data Login ----------> ", dataLogin);
     return dataLogin;
   }
 
+  //Autentificación del usuario
   async login(email, password) {
     const instanceLoginRepository = new LoginRepository(loginDb);
     const instanceLoginService = new LoginService(instanceLoginRepository);
@@ -191,6 +194,7 @@ class ProfessorController {
     return dataLogin;
   }
 
+  //Obtiene todos los cursos de un profesor por su Id
   async getAllCourses(id) {
     const instanceCourseRepository = new CourseRepository(courseDb);
     const instanceCourseService = new CourseService(instanceCourseRepository);
@@ -204,6 +208,7 @@ class ProfessorController {
     return resultCourse;
   }
 
+  //Obtiene los cursos por DNI profesor 
   async getProfessorToCourse(token) {
     const instanceProfessorRepository = new ProfessorRepository(professorDb);
     const instanceProfessorService = new ProfessorService(
@@ -218,6 +223,7 @@ class ProfessorController {
     return dataProfessor;
   }
 
+  //Obtiene todos los estudiantes de un curso
   async getStudentsOfCourses(token) {
     const instanceCourseStudentsRepository = new CourseStudentsRepository(
       courseStudentsDb
@@ -235,6 +241,7 @@ class ProfessorController {
     return dataStudentsCourse;
   }
 
+  //Eliminación de un curso por Id del curso
   async deleteCourse(id) {
     const instanceCourseRepository = new CourseRepository(courseDb);
     const instanceCourseService = new CourseService(instanceCourseRepository);
@@ -247,6 +254,7 @@ class ProfessorController {
     return data;
   }
 
+  //Obtiene la información de un curso
   async getCourse(id) {
     const instanceCourseRepository = new CourseRepository(courseDb);
     const instanceCourseService = new CourseService(instanceCourseRepository);
@@ -259,6 +267,7 @@ class ProfessorController {
     return data;
   }
 
+  //Actualiza la información de un curso por Id
   async updateCourse(name, section, type, semestre, id) {
     const instanceCourseRepository = new CourseRepository(courseDb);
     const instanceCourseService = new CourseService(instanceCourseRepository);

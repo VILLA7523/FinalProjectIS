@@ -23,6 +23,7 @@ const SectionService = require("../../aplication/services/type.service");
 const SectionRepository = require("../../domain/repository/type.repository");
 
 class DataController {
+
   async getAllPerson() {
     const instancePersonRepository = new TypeRepository(personDb);
     const instancePersonService = new TypeService(instancePersonRepository);
@@ -33,6 +34,7 @@ class DataController {
     });
     return data;
   }
+
 
   async getAllVerify() {
     const instanceVerifyRepository = new VerifyRepository(personDb);
