@@ -55,7 +55,7 @@ module.exports = CityModel;
 
 #### Fragmento de código
 
-```
+``` javascript
 const express = require("express");
 const router = express.Router();
 const VerifyModel = require("../../domain/models/verify.model");
@@ -204,13 +204,140 @@ module.exports = DataController;
 - El problema se descompone utilizando alguna forma de abstracción (procedimientos, funciones, objetos, etc.)
 - Los aspectos del problema se agregan al programa principal sin editar el código fuente de las abstracciones. Estas funciones secundarias se aferran a las abstracciones principales nombrándolas, como en "Soy un aspecto de foo (¡aunque puede que foo no lo sepa!)".
 
-Manejo de objetos: Codigo referente en [Click aqui](https://github.com/MrsblR/FinalProjectIS/blob/main/Application/src/interfaces/controllers/professor.controller.js_)_
+``` javascript
+class DataController {
+  constructor() { }
 
-![image](https://user-images.githubusercontent.com/79772873/186238736-3ae793ac-da44-437c-91a3-f2181df3e6eb.png)
+  async getAllPerson() {
+    var personRepository = new TypeRepository(personDb);
+    var personService = new TypeService(personRepository);
+    const result = personService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
 
-Uso de clases y funciones referente en [Click aqui](https://github.com/VILLA7523/FinalProjectIS/blob/main/Application/src/domain/repository/city.repository.js)_
+  async getAllVerify() {
+    var verifyRepository = new VerifyRepository(personDb);
+    var verifyService = new VerifyService(verifyRepository);
+    const result = verifyService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
 
-![image](https://user-images.githubusercontent.com/79772873/186239671-c6f36b9f-d83c-4f1b-852f-9da425663c90.png)
+  async getAllCities() {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const data = await cityService.getAll().catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+
+  async getAllType() {
+    var typeRepository = new TypeRepository(typeDb);
+    var typeService = new TypeService(typeRepository);
+    const data = await typeService.getAll().catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllSection() {
+    var sectionRepository = new SectionRepository(sectionDb);
+    var sectionService = new SectionService(sectionRepository);
+    const result = sectionService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCityByName(name) {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const result = cityService.findByName(name);
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCityById(id) {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const result = cityService.get(id);
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllCourses() {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCourseById(id) {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.get(id)
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCourseByName(name) {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.findByName(name)
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+}
+
+module.exports = DataController;
+```
+
+Uso de clases y funciones referente
+
+``` javascript
+const BaseRepository = require("./base.repository");
+
+class CityRepository extends BaseRepository {
+  constructor(CityDb) {
+    super(CityDb);
+  }
+
+  async getAllWithoutPagination() {
+    return this.model.find();
+  }
+}
+
+module.exports = CityRepository;
+```
 
 ## PRÁCTICA 9: CODIFICACIÓN LEGIBLE (CLEAN CODE)
 
@@ -229,10 +356,255 @@ Uso de clases y funciones referente en [Click aqui](https://github.com/VILLA7523
 
 #### Framgmento de código
 
-_1. Uso de comentarios respetando las reglas designadas [enlace](https://github.com/VILLA7523/FinalProjectIS/blob/main/Application/src/interfaces/controllers/professor.controller.js)_
+Uso de comentarios respetando las reglas designadas 
 
-![image](https://user-images.githubusercontent.com/79772873/186257096-47c895cf-62b6-4af3-869f-34050d4b440d.png)
+``` javascript
+const express = require("express");
+const router = express.Router();
+const PersonModel = require("../../domain/models/person.model");
+const personDb = new PersonModel();
+const LoginModel = require("../../domain/models/login.model");
+const loginDb = new LoginModel();
+const ProfessorModel = require("../../domain/models/professor.model");
+const professorDb = new ProfessorModel();
+const InscriptionModel = require("../../domain/models/inscription.model");
+const inscriptionDb = new InscriptionModel();
+const CourseModel = require("../../domain/models/course.model")
+const courseDb = new CourseModel();
+const CourseStudentsModel = require("../../domain/models/course_student.model");
+const courseStudentsDb = new CourseStudentsModel();
+const SheduleModel = require("../../domain/models/shedule.model");
+const sheduleDb = new SheduleModel();
 
+const ProfessorService = require("../../aplication/services/professor.service");
+const ProfessorRepository = require("../../domain/repository/professor.repository");
+
+const InscriptionService = require("../../aplication/services/inscription.service");
+const InscriptionRepository = require("../../domain/repository/inscription.repository");
+
+const SheduleService = require("../../aplication/services/shedule.service");
+const SheduleRepository = require("../../domain/repository/shedule.repository");
+
+const CourseService = require("../../aplication/services/course.service");
+const CourseRepository = require("../../domain/repository/course.repository");
+
+const PersonService = require("../../aplication/services/person.service");
+const PersonRepository = require("../../domain/repository/person.repository");
+
+const LoginService = require("../../aplication/services/login.service");
+const LoginRepository = require("../../domain/repository/login.repository");
+
+const CourseStudentsService = require("../../aplication/services/courseStudents.service");
+const CourseStudentsRepository = require("../../domain/repository/courseStudents.repository");
+
+class ProfessorController {
+  async getAll() {
+    var professorRepository = new ProfessorRepository(professorDb);
+    var professorService = new ProfessorService(professorRepository);
+    const result = profesorService.getAll()
+    const data = await result.catch((err) => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findBydCode(code) {
+    var professorRepository = new ProfessorRepository(professorDb);
+    var professorService = new ProfessorService(professorRepository);
+    const result = professorService.findBydCode(code)
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async studentInscription(StudentID, CourseID) {
+    var inscriptionRepository = new InscriptionRepository(inscriptionDb);
+    var inscriptionService = new InscriptionService(inscriptionRepository);
+    const result = inscriptionService.create({ StudentID, CourseID });
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async NuevoHorario(Day, Start, Finish, CourseID) {
+    var sheduleRepository = new SheduleRepository(sheduleDb);
+    var sheduleService = new SheduleService(sheduleRepository);
+    const result = sheduleService.create({ Day, Start, Finish, CourseID });
+    const data = await result.catch((err) => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async GetHorario(CourseID) {
+    var sheduleRepository = new SheduleRepository(sheduleDb);
+    var sheduleService = new SheduleService(sheduleRepository);
+    const result = sheduleService.get(CourseID);
+    const data = await result.catch((err) => {
+      console.log("controller Error Get Horario ", err);
+      return null;
+    });
+    return data;
+  }
+
+  async NuevoCourse(Course_Name, SectionID, TypeID, ProfessorID, NumEst, Semestre) {
+    var courseRepository = new CourseRepository(courseDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.create({ Course_Name, SectionID, TypeID, ProfessorID, NumEst, Semestre });
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+
+    return data;
+  }
+
+  async register(
+    First_Name,
+    Last_Name,
+    Email,
+    DNI,
+    Mobile_Phone,
+    CityID,
+    Department,
+    Password,
+    idDNI) {
+    var personRepository = new PersonRepository(personDb);
+    var personService = new PersonService(personRepository);
+    var professorRepository = new ProfessorRepository(professorDb);
+    var professorService = new ProfessorService(professorRepository);
+    var loginRepository = new LoginRepository(loginDb);
+    var loginService = new LoginService(loginRepository);
+
+    const result = personService.create(
+
+      First_Name,
+      Last_Name,
+      Email,
+      DNI,
+      null,
+      Mobile_Phone,
+      CityID
+
+    );
+
+    const data = await result.catch((err) => {
+      console.log("controller Error", err);
+      return null;
+    });
+
+    let dataId;
+    const resultProfessor = professorService.create({ Department, dataId, idDNI });
+    const dataProfessor = await resultProfessor.catch(err => {
+      console.log("controller Error Professor", err);
+      return null;
+    })
+
+    let val = null;
+    let rol = 1;
+    const resultLogin = loginService.create({ Email, Password, val, idDNI, rol });
+    const dataLogin = await result.catch((err) => {
+      console.log("controller Error", err);
+      return null;
+    });
+    console.log("dataLogin", dataLogin);
+    return dataLogin;
+  }
+
+  async login(email, password) {
+    var loginRepository = new LoginRepository(loginDb);
+    var loginService = new LoginService(loginRepository);
+    const resulLogin = loginService.authenticate(email, password);
+    const dataLogin = await resulLogin.catch((err) => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return dataLogin;
+  }
+
+  async getAllCourses(id) {
+    var courseRepository = new CourseRepository(courseDb);
+    var courseService = new CourseService(courseRepository);
+
+    const resultCourse = await courseService.findByIdProfessor(id)
+      .catch((err) => {
+        console.log("Controller Error", err);
+        return null;
+      });
+    return resultCourse;
+  }
+
+
+  async getProfessorToCourse(token) {
+    var professorRepository = new ProfessorRepository(professorDb);
+    var professorService = new ProfessorService(professorRepository);
+
+    const resultProfessor = professorService.findByDNI(token);
+    const dataProfessor = await resultProfessor.catch((err) => {
+      console.log("Controller error", err);
+      return null;
+    });
+    return dataProfessor;
+  }
+
+  async getStudentsOfCourses(token) {
+    var courseStudentsRepository = new CourseStudentsRepository(courseStudentsDb);
+    var courseStudentsService = new CourseStudentsService(courseStudentsRepository);
+
+    const resultStudentsCourse = courseStudentsService.studentsForCourse(token);
+    const dataStudentsCourse = await resultStudentsCourse.catch((err) => {
+      console.log("Controller error", err);
+      return null;
+    });
+    return dataStudentsCourse;
+  }
+
+  async deleteCourse(id) {
+    var courseRepository = new CourseRepository(courseDb);
+    var courseService = new CourseService(courseRepository);
+
+    const result = courseService.delete(id);
+    const data = await result.catch((err) => {
+      console.log("Controller error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getCourse(id) {
+    var courseRepository = new CourseRepository(courseDb);
+    var courseService = new CourseService(courseRepository);
+
+    const result = courseService.get(id)
+    const data = await result.catch((err) => {
+      console.log("Controller error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async updateCourse(name, section, type, semestre, id) {
+    var courseRepository = new CourseRepository(courseDb);
+    var courseService = new CourseService(courseRepository);
+
+    const result = courseService.update({ name, section, type, semestre, id })
+    const data = await result.catch((err) => {
+      console.log("Controller error", err);
+      return null;
+    });
+    return data;
+  }
+
+}
+
+module.exports = ProfessorController;
+```
 
 ### Clean Code 2 - Reglas de nombres
 
@@ -447,11 +819,117 @@ module.exports = BaseRepository;
 
 ### Fragmento de código
 
-![image](https://user-images.githubusercontent.com/79772873/186264910-72737056-ae92-422f-9a7c-00c9bf9653d3.png)
+```
+const BaseService = require("./base.service");
 
-![image](https://user-images.githubusercontent.com/79772873/186265001-77c45102-206c-4007-a4cd-7377655dd876.png)
+class CourseService extends BaseService {
+  constructor(CourseRepository) {
+    super(CourseRepository);
+    this._CourseRepository = CourseRepository;
+  }
 
-![image](https://user-images.githubusercontent.com/79772873/186265155-43317f51-da47-4f91-8768-f7ba28495e95.png)
+  async findByIdProfessor(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Email or password missing";
+      throw error;
+    }
+
+    const entity = await this.repository.findByIdProfessor(id);
+
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Failed authentication";
+      throw error;
+    }
+    return entity;
+  }
+  //si es true aumenta , si es fals disminuye
+
+  async updateCantEstIn(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro id debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.updateCantEstIn(id);
+
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async updateCantEstDe(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro id debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.updateCantEstDe(id);
+
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+}
+
+module.exports = CourseService;
+```
+
+``` javascript
+const BaseRepository = require("./base.repository");
+
+class CourseRepository extends BaseRepository {
+  constructor(CourseDb) {
+    super(CourseDb);
+  }
+  async findByIdProfessor(id) {
+    return await this.model.findByIdProfessor(id);
+  }
+}
+
+module.exports = CourseRepository
+```
+
+``` javascript
+  async getCourse(id) {
+    var courseRepository = new CourseRepository(courseDb);
+    var courseService = new CourseService(courseRepository);
+
+    const result = courseService.get(id)
+    const data = await result.catch((err) => {
+      console.log("Controller error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async updateCourse(name, section, type, semestre, id) {
+    var courseRepository = new CourseRepository(courseDb);
+    var courseService = new CourseService(courseRepository);
+
+    const result = courseService.update({ name, section, type, semestre, id })
+    const data = await result.catch((err) => {
+      console.log("Controller error", err);
+      return null;
+    });
+    return data;
+  }
+```
 
 ### Clean Code - 7 Capitalize SQL Special Words
 #### Descripción
