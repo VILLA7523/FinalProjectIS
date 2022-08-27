@@ -419,20 +419,131 @@ module.exports = CourseRepository
 ### Interface segregation principle(ISP)
 
 #### Descripción
-No se debe obligar a los clientes a depender de métodos que no utilizan. Cuando se requiere que una Clase realice acciones que no son útiles, es un desperdicio y puede producir errores inesperados si la Clase no tiene la capacidad de realizar esas acciones.
-Una clase debe realizar solo las acciones necesarias para cumplir su función. Cualquier otra acción debe eliminarse por completo o moverse a otro lugar si otra Clase podría usarla en el futuro.
+- No se debe obligar a los clientes a depender de métodos que no utilizan. Cuando se requiere que una Clase realice acciones que no son útiles, es un desperdicio y puede producir errores inesperados si la Clase no tiene la capacidad de realizar esas acciones.
+- Una clase debe realizar solo las acciones necesarias para cumplir su función. Cualquier otra acción debe eliminarse por completo o moverse a otro lugar si otra Clase podría usarla en el futuro.
 
 #### Fragmento de Código
-Los metodos principales usados para el CRUD estan definidos tanto en base.repository.js como en base.service.js respectivamente.
+Los metodos principales usados para el CRUD estan definidos tanto en base.repository.js como en base.service.js respectivamente , aqui cumplimos con lo mecionado anteriormente , de que no se debe colocar funcionalidades que no usemos , es por ello que estas clases definen solo acciones que otra clases podría cumplir en un futuro , y en general las que toda clase debe usar.  
 
-![image](https://user-images.githubusercontent.com/79772873/186266190-ee8f3091-9f82-443a-a969-9f538cdccf8f.png)
+Implementación de base repository , asi mismo esta clase funciona como interfaz entre los mmodels y los services
 
-Se usa en las siguientes clases: 
+``` Javascript
+class BaseRepository {
+  constructor(model) {
+    this.model = model;
+  }
+  async get(id) {
+    return this.model.get(id);
+  }
+  async getAll() {
+    return this.model.getAll();
+  }
+  async getByName(name) {
+    return this.model.getByName(name);
+  }
+  async create(entity) {
+    return this.model.create(entity);
+  }
+  async update(entity) {
+    return this.model.update(entity);
+  }
+  async delete(id) {
+    return this.model.delete(id);
+  }
+}
+```
 
-![image](https://user-images.githubusercontent.com/79772873/187010495-54a84de6-9407-4c47-8ceb-a3e833a70dbc.png)
+Implementación de Base Service , asi mismo esta clase funciona como interfaz entre los controllers y los repository
+
+``` javascript
+class BaseService {
+  constructor(Repository) {
+    this.repository = Repository;
+  }
+  async get(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro id debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.get(id);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async getByName(name) {
+    if (!name) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro name debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.getByName(name);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async getAll() {
+    const entity = await this.repository.getAll();
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async create(data) {
+    const entity = await this.repository.create(data);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async update(data) {
+    const entity = await this.repository.update(data);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async delete(id) {
+    const entity = await this.repository.delete(id);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+}
+```
 
 
-![image](https://user-images.githubusercontent.com/79772873/187010519-2529dada-354a-4d32-81e2-41f1112099c0.png)
+
 
 
 
