@@ -167,13 +167,43 @@ Clases que usan al implementacion de base Service.
 
 ![image](https://user-images.githubusercontent.com/79772873/187010583-371bc6d1-82af-40d2-91ee-2e05ef3902d2.png)
 
-### Principio abierto/cerrado (OCP)
+### 2 - Principio abierto/cerrado (OCP)
 #### Descripción
+El Principio Abierto/Cerrado, también conocido como Open/Closed Principle o por sus siglas OCP, es el segundo de los 5 principios SOLID de la programación orientada a objetos.
 
-Como afirma Bertrand Meyer, "las entidades de software (clases, módulos, funciones, etc.) deben estar abiertas a la extensión, pero cerradas a la modificación". Pero, ¿qué significa eso? Este principio básicamente establece que debe permitir a los usuarios agregar nuevas funcionalidades sin cambiar el código existente.
+Los módulos que cumplen con el principio abierto-cerrado tienen dos características principales. Estos son
+
+ - Abiertos para la extensión: Esto significa que el comportamiento del módulo puede ser extendido. Cuando los requerimientos de la aplicación cambian, debemos ser capaces de extender el módulo con estos nuevos comportamientos que satisfagan esos cambios. En otras palabras, debemos ser capaces de cambiar lo que el módulo hace.
+ - Cerrado para la modificación: Esto significa que extender el comportamiento de un módulo no debería tener como resultado cambiar el código fuente, es decir, el código original debe permanecer sin cambios.
 
 #### Fragmento de Código
+La siguiente fragmento de código muestra la implementación de la clase Base Service , en la cual se encuentran las funciones crud , cumple con las caracteristica de este principio ya que se puede observar que en la clase baseRepository estan implementadas en la segunda imagen podemos observar que la clases extiende , de la mostrada anteriormente , aqui implementamos funcionalidades propias de esta que la clase base no deberia tener ya que no son para todas :
 
+``` Javascript
+class BaseRepository {
+  constructor(model) {
+    this.model = model;
+  }
+  async get(id) {
+    return this.model.get(id);
+  }
+  async getAll() {
+    return this.model.getAll();
+  }
+  async getByName(name) {
+    return this.model.getByName(name);
+  }
+  async create(entity) {
+    return this.model.create(entity);
+  }
+  async update(entity) {
+    return this.model.update(entity);
+  }
+  async delete(id) {
+    return this.model.delete(id);
+  }
+}
+```
 ![image](https://user-images.githubusercontent.com/79772873/187010309-e5295fd7-0c57-46e9-8a0c-987b2bdc8d87.png)
 
 
