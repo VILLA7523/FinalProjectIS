@@ -819,7 +819,7 @@ module.exports = BaseRepository;
 
 ### Fragmento de código
 
-```
+``` javascript
 const BaseService = require("./base.service");
 
 class CourseService extends BaseService {
