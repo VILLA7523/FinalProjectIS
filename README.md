@@ -416,7 +416,7 @@ module.exports = CourseRepository
 ```
 
 
-### Interface segregation principle(ISP)
+### 3 - Interface segregation principle(ISP)
 
 #### Descripción
 - No se debe obligar a los clientes a depender de métodos que no utilizan. Cuando se requiere que una Clase realice acciones que no son útiles, es un desperdicio y puede producir errores inesperados si la Clase no tiene la capacidad de realizar esas acciones.
