@@ -19,8 +19,33 @@
 - El envío de mensajes puede resultar en el envío del mensaje a otra cápsula.
 
 #### Fragmento de código
-![image](https://user-images.githubusercontent.com/79772873/185766980-a6ee77f6-3e46-4e2d-be25-21d34f6fce47.png)
 
+``` javascript
+const express = require("express");
+const router = express.Router();
+const connectionDb = require("../../config/dbconnections");
+
+class CityModel {
+  async getAll() {
+    const con = connectionDb.promise();
+    const data = await con.query("SELECT * FROM city");
+    return data[0];
+  }
+  async get(id) {
+    const con = connectionDb.promise();
+    const data = await con.query("SELECT * FROM city WHERE CityID = ?", [id]);
+    return data[0];
+  }
+  async findByName(city) {
+    const con = connectionDb.promise();
+    const data = await con.query("SELECT * FROM city WHERE City_Name = ?", [
+      city,
+    ]);
+    return data[0];
+  }
+}
+module.exports = CityModel;
+```
 
 ### Estilo 2 - Tantrum
 
@@ -29,8 +54,149 @@
 - Todos los bloques de código verifican todos los posibles errores, posiblemente imprimen mensajes específicos del contexto cuando ocurren errores y pasan los errores a la cadena de llamadas de función
 
 #### Fragmento de código
-![image](https://user-images.githubusercontent.com/79772873/185767788-aeeb7a7d-4084-45cd-93f0-4b721a7de161.png)
 
+```
+const express = require("express");
+const router = express.Router();
+const VerifyModel = require("../../domain/models/verify.model");
+const verifyDb = new VerifyModel();
+const CityModel = require("../../domain/models/city.model");
+const cityDb = new CityModel();
+const CourseModel = require("../../domain/models/course.model");
+const SectionModel = require("../../domain/models/section.model");
+const sectionDb = new SectionModel();
+const TypeModel = require("../../domain/models/type.model");
+const typeDb = new TypeModel();
+const PersonModel = require("../../domain/models/person.model");
+const personDb = new PersonModel();
+const courseDb = new CourseModel();
+
+const CourseService = require("../../aplication/services/course.service");
+const CourseRepository = require("../../domain/repository/course.repository");
+
+const CityService = require("../../aplication/services/city.service");
+const CityRepository = require("../../domain/repository/city.repository");
+
+const TypeService = require("../../aplication/services/type.service");
+const TypeRepository = require("../../domain/repository/type.repository");
+
+const SectionService = require("../../aplication/services/type.service");
+const SectionRepository = require("../../domain/repository/type.repository");
+
+
+class DataController {
+  constructor() { }
+  async getAllPerson() {
+    var personRepository = new TypeRepository(personDb);
+    var personService = new TypeService(personRepository);
+    const result = personService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllVerify() {
+    var verifyRepository = new VerifyRepository(personDb);
+    var verifyService = new VerifyService(verifyRepository);
+    const result = verifyService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllCities() {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const data = await cityService.getAll().catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+
+  async getAllType() {
+    var typeRepository = new TypeRepository(typeDb);
+    var typeService = new TypeService(typeRepository);
+    const data = await typeService.getAll().catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllSection() {
+    var sectionRepository = new SectionRepository(sectionDb);
+    var sectionService = new SectionService(sectionRepository);
+    const result = sectionService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCityByName(name) {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const result = cityService.findByName(name);
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCityById(id) {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const result = cityService.get(id);
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllCourses() {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCourseById(id) {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.get(id)
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCourseByName(name) {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.findByName(name)
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+}
+module.exports = DataController;
+```
 
 ### Estilo 3 - Aspects
 
@@ -38,11 +204,11 @@
 - El problema se descompone utilizando alguna forma de abstracción (procedimientos, funciones, objetos, etc.)
 - Los aspectos del problema se agregan al programa principal sin editar el código fuente de las abstracciones. Estas funciones secundarias se aferran a las abstracciones principales nombrándolas, como en "Soy un aspecto de foo (¡aunque puede que foo no lo sepa!)".
 
-_1. Manejo de objetos: Codigo refrente en [Click aqui](https://github.com/MrsblR/FinalProjectIS/blob/main/Application/src/interfaces/controllers/professor.controller.js_)_
+Manejo de objetos: Codigo referente en [Click aqui](https://github.com/MrsblR/FinalProjectIS/blob/main/Application/src/interfaces/controllers/professor.controller.js_)_
 
 ![image](https://user-images.githubusercontent.com/79772873/186238736-3ae793ac-da44-437c-91a3-f2181df3e6eb.png)
 
-_2. Uso de clases y funciones referente en [Click aqui](https://github.com/VILLA7523/FinalProjectIS/blob/main/Application/src/domain/repository/city.repository.js)_
+Uso de clases y funciones referente en [Click aqui](https://github.com/VILLA7523/FinalProjectIS/blob/main/Application/src/domain/repository/city.repository.js)_
 
 ![image](https://user-images.githubusercontent.com/79772873/186239671-c6f36b9f-d83c-4f1b-852f-9da425663c90.png)
 
