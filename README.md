@@ -143,8 +143,6 @@ _1 El nombre de las funciones son descriptivas , además en todas las funciones 
 
 Fragmento de Código
 
-
-
 ## PRACTICA 11 - PRINCIPIOS SOLID
 ### Principio de inversión de dependencia (DIP)
 
@@ -158,14 +156,165 @@ pero si has trabajado con marcos PHP (como Symfony), has visto una implementaci�
 Un gran beneficio de esto es que reduce el acoplamiento entre módulos. El acoplamiento es un patrón de desarrollo muy malo porque hace que su código sea difícil de refactorizar.
 
 #### Fragmento de código
+En nuestra implementación se cumple este principio , un ejemplo de ello son en lo servicios , repository , etc . todas las funciones que se usaran en el proyecto son propias de cada modelo esto quiere decir , que en cada clase se impletan funciones que no comparte con las demás , y las que si son genéricas se establecen en una clase base , tomando en cuenta las principales funciones crud asi como los filtros.
 
-Clase base de implementación de crud en la siguiente imagen: 
+Implementacion de baseService , se puede observar las principales funciones crud.
 
-![image](https://user-images.githubusercontent.com/79772873/187010563-0dad0d99-4d68-4105-b7e1-d092795005ec.png)
+``` javascript
+class BaseService {
+  constructor(Repository) {
+    this.repository = Repository;
+  }
+  async get(id) {
+    if (!id) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro id debe ser enviado";
+      throw error;
+    }
 
-Clases que usan al implementacion de base Service.
+    const entity = await this.repository.get(id);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
 
-![image](https://user-images.githubusercontent.com/79772873/187010583-371bc6d1-82af-40d2-91ee-2e05ef3902d2.png)
+  async getByName(name) {
+    if (!name) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Parametro name debe ser enviado";
+      throw error;
+    }
+
+    const entity = await this.repository.getByName(name);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async getAll() {
+    const entity = await this.repository.getAll();
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async create(data) {
+    const entity = await this.repository.create(data);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async update(data) {
+    const entity = await this.repository.update(data);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+
+  async delete(id) {
+    const entity = await this.repository.delete(id);
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Entidad no encontrada";
+      throw error;
+    }
+    return entity;
+  }
+}
+```
+
+De esta clase base extienden otras como: 
+
+CouserStudetsService , se observa que solo esta implementado funciones propias de esta.
+
+```javascript
+const BaseService = require("./base.service");
+
+class CourseStudentsService extends BaseService {
+  constructor(CourseStudentsRepository) {
+    super(CourseStudentsRepository);
+    this._CourseStudentsRepository = CourseStudentsRepository;
+  }
+  async studentsForCourse(token) {
+    if (!token) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "token parameter is missing";
+      throw error;
+    }
+
+    const entity = await this.repository.studentsForCourse(token);
+
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Student not found";
+      throw error;
+    }
+    return entity;
+  }
+}
+
+module.exports = CourseStudentsService;
+```
+
+LoginService , se observa que solo esta implementado funciones propias de esta.
+
+```
+const BaseService = require("./base.service");
+
+class LoginService extends BaseService {
+  constructor(LoginRepository) {
+    super(LoginRepository);
+    this._LoginRepository = LoginRepository;
+  }
+
+  async authenticate(email, password) {
+    if (!email || !password) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Email or password missing";
+      throw error;
+    }
+
+    const entity = await this.repository.authenticate(email, password);
+
+    if (!entity) {
+      const error = new Error();
+      error.status = 400;
+      error.message = "Failed authentication";
+      throw error;
+    }
+    return entity;
+  }
+}
+
+module.exports = LoginService;
+```
 
 ### 2 - Principio abierto/cerrado (OCP)
 #### Descripción
@@ -268,6 +417,7 @@ module.exports = CourseRepository
 
 
 ### Interface segregation principle(ISP)
+
 #### Descripción
 No se debe obligar a los clientes a depender de métodos que no utilizan. Cuando se requiere que una Clase realice acciones que no son útiles, es un desperdicio y puede producir errores inesperados si la Clase no tiene la capacidad de realizar esas acciones.
 Una clase debe realizar solo las acciones necesarias para cumplir su función. Cualquier otra acción debe eliminarse por completo o moverse a otro lugar si otra Clase podría usarla en el futuro.
