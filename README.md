@@ -200,8 +200,6 @@ class DataController {
 module.exports = DataController;
 ```
 
-
-
 ### Clean Code 3 - Consejos de comprensibilidad
 
 #### Despcripción 
@@ -214,7 +212,21 @@ module.exports = DataController;
 - Evita los condicionales negativos.
 
 #### Fragmento de Código
-_1 - Uso de variables de entorno uso del código [Click aqui](https://github.com/VILLA7523/FinalProjectIS/blob/main/Application/src/config/dbconnections.js)
+Uso de variables de entorno uso del código
+
+``` javascript
+require("dotenv").config();
+const mysql = require("mysql2");
+// create the pool
+const pool = mysql.createPool({
+  host: process.env.HOST,
+  user: process.env.USER,
+  database: process.env.DATABASE,
+  password: process.env.PASSWORD,
+});
+
+module.exports = pool;
+```
 
 ![image](https://user-images.githubusercontent.com/79772873/186261145-152e92dd-0ea5-49cf-8ca1-ea2822687627.png)
 
