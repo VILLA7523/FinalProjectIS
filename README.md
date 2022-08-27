@@ -143,5 +143,62 @@ _1 El nombre de las funciones son descriptivas , además en todas las funciones 
 
 Fragmento de Código
 
+
+
+## PRACTICA 11 - PRINCIPIOS SOLID
+### Principio de inversión de dependencia (DIP)
+
+#### Descripción
+Este principio establece dos cosas esenciales:
+
+- Los módulos de alto nivel no deben depender de los módulos de bajo nivel. Ambos deberían depender de abstracciones.
+- Las abstracciones no deben depender de los detalles. Los detalles deben depender de las abstracciones.
+Esto puede ser difícil de entender al principio,
+pero si has trabajado con marcos PHP (como Symfony), has visto una implementación de este principio en forma de inyección de dependencia (DI). Si bien no son conceptos idénticos, DIP evita que los módulos de alto nivel conozcan los detalles de sus módulos de bajo nivel y los configuren. Puede lograr esto a través de DI.
+Un gran beneficio de esto es que reduce el acoplamiento entre módulos. El acoplamiento es un patrón de desarrollo muy malo porque hace que su código sea difícil de refactorizar.
+
+#### Fragmento de código
+
+Clase base de implementación de crud en la siguiente imagen: 
+
+![image](https://user-images.githubusercontent.com/79772873/187010563-0dad0d99-4d68-4105-b7e1-d092795005ec.png)
+
+Clases que usan al implementacion de base Service.
+
+![image](https://user-images.githubusercontent.com/79772873/187010583-371bc6d1-82af-40d2-91ee-2e05ef3902d2.png)
+
+### Principio abierto/cerrado (OCP)
+#### Descripción
+
+Como afirma Bertrand Meyer, "las entidades de software (clases, módulos, funciones, etc.) deben estar abiertas a la extensión, pero cerradas a la modificación". Pero, ¿qué significa eso? Este principio básicamente establece que debe permitir a los usuarios agregar nuevas funcionalidades sin cambiar el código existente.
+
+#### Fragmento de Código
+
+![image](https://user-images.githubusercontent.com/79772873/187010309-e5295fd7-0c57-46e9-8a0c-987b2bdc8d87.png)
+
+
+### Interface segregation principle(ISP)
+#### Descripción
+No se debe obligar a los clientes a depender de métodos que no utilizan. Cuando se requiere que una Clase realice acciones que no son útiles, es un desperdicio y puede producir errores inesperados si la Clase no tiene la capacidad de realizar esas acciones.
+Una clase debe realizar solo las acciones necesarias para cumplir su función. Cualquier otra acción debe eliminarse por completo o moverse a otro lugar si otra Clase podría usarla en el futuro.
+
+#### Fragmento de Código
+
+Implementacion crud en la sigueinte imagen en base repository: 
+
 ![image](https://user-images.githubusercontent.com/79772873/186266190-ee8f3091-9f82-443a-a969-9f538cdccf8f.png)
+
+Se usa en las siguientes clases: 
+
+![image](https://user-images.githubusercontent.com/79772873/187010495-54a84de6-9407-4c47-8ceb-a3e833a70dbc.png)
+
+
+![image](https://user-images.githubusercontent.com/79772873/187010519-2529dada-354a-4d32-81e2-41f1112099c0.png)
+
+
+
+
+
+
+
 
