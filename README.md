@@ -80,9 +80,126 @@ _1. Uso de comentarios respetando las reglas designadas [enlace](https://github.
 
 #### Framgmento de código
 
-_1. Respetando las reglas de nombre , podemos observar en la sigueinte imagen que el nombre de las funciones como el de las variables no son ambiguas , y son muy descriotivas , encontradas en el dataController para más informacion [Click aqui](https://github.com/VILLA7523/FinalProjectIS/blob/main/Application/src/interfaces/controllers/data.controller.js)_
+Respetando las reglas de nombre , podemos observar en la sigueinte imagen que el nombre de las funciones como el de las variables no son ambiguas , y son muy descriotivas , encontradas en el dataController para más informacion.
 
-![image](https://user-images.githubusercontent.com/79772873/186258403-627cd7ac-8883-4cb9-a622-74642230f201.png)
+``` javascript
+
+class DataController {
+  constructor() { }
+
+  async getAllPerson() {
+    var personRepository = new TypeRepository(personDb);
+    var personService = new TypeService(personRepository);
+    const result = personService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllVerify() {
+    var verifyRepository = new VerifyRepository(personDb);
+    var verifyService = new VerifyService(verifyRepository);
+    const result = verifyService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllCities() {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const data = await cityService.getAll().catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+
+  async getAllType() {
+    var typeRepository = new TypeRepository(typeDb);
+    var typeService = new TypeService(typeRepository);
+    const data = await typeService.getAll().catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllSection() {
+    var sectionRepository = new SectionRepository(sectionDb);
+    var sectionService = new SectionService(sectionRepository);
+    const result = sectionService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCityByName(name) {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const result = cityService.findByName(name);
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCityById(id) {
+    var cityRepository = new CityRepository(cityDb);
+    var cityService = new CityService(cityRepository);
+    const result = cityService.get(id);
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async getAllCourses() {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.getAll();
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCourseById(id) {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.get(id)
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+
+  async findCourseByName(name) {
+    var courseRepository = new CourseRepository(CoursesDb);
+    var courseService = new CourseService(courseRepository);
+    const result = courseService.findByName(name)
+    const data = await result.catch(err => {
+      console.log("controller Error", err);
+      return null;
+    });
+    return data;
+  }
+}
+
+module.exports = DataController;
+```
+
 
 
 ### Clean Code 3 - Consejos de comprensibilidad
@@ -542,137 +659,8 @@ class BaseService {
 }
 ```
 
-### 4 - Liskov Substitution Principle (LSP)
-
-#### Descripción
-
-Este es un término aterrador para un concepto muy simple. Se define formalmente como "Si S es un subtipo de T, entonces los objetos de tipo T pueden reemplazarse con objetos de tipo S (es decir, los objetos de tipo S pueden sustituir a los objetos de tipo T) sin alterar ninguna de las propiedades deseables de ese programa (corrección, tarea realizada, etc.).
-
-La mejor explicación para esto es que si tiene una clase principal y una clase secundaria, entonces la clase base y la clase secundaria se pueden usar indistintamente sin obtener resultados incorrectos.
-
-Al tener un base repository y una clase en si que extiende de esta , eso quire decir que podemos llamara tanto a la clase base como a las clase que extiende de esta , entonces se cumple estrre principoo que no menciona que la clase principal como la clase secundaria no ontentran un resultado distinto.
 
 
-``` javascript
-class BaseRepository {
-  constructor(model) {
-    this.model = model;
-  }
-  async get(id) {
-    return await this.model.get(id);
-  }
-  async getAll() {
-    return await this.model.getAll();
-  }
-  async getByName(name) {
-    return await this.model.getByName(name);
-  }
-  async create(entity) {
-    return await this.model.create(entity);
-  }
-  async update(entity) {
-    return await this.model.update(entity);
-  }
-  async delete(id) {
-    return await this.model.delete(id);
-  }
-}
-
-module.exports = BaseRepository;
-```
-
-Implementción de CourseService que extiende de la clase base .
-
-``` javascript
-const BaseService = require("./base.service");
-
-class CourseService extends BaseService {
-  constructor(CourseRepository) {
-    super(CourseRepository);
-    this._CourseRepository = CourseRepository;
-  }
-
-  async findByIdProfessor(id) {
-    if (!id) {
-      const error = new Error();
-      error.status = 400;
-      error.message = "Email or password missing";
-      throw error;
-    }
-
-    const entity = await this.repository.findByIdProfessor(id);
-
-    if (!entity) {
-      const error = new Error();
-      error.status = 400;
-      error.message = "Failed authentication";
-      throw error;
-    }
-    return entity;
-  }
-  //si es true aumenta , si es fals disminuye
-
-  async updateCantEstIn(id) {
-    if (!id) {
-      const error = new Error();
-      error.status = 400;
-      error.message = "Parametro id debe ser enviado";
-      throw error;
-    }
-
-    const entity = await this.repository.updateCantEstIn(id);
-
-    if (!entity) {
-      const error = new Error();
-      error.status = 400;
-      error.message = "Entidad no encontrada";
-      throw error;
-    }
-    return entity;
-  }
-
-  async updateCantEstDe(id) {
-    if (!id) {
-      const error = new Error();
-      error.status = 400;
-      error.message = "Parametro id debe ser enviado";
-      throw error;
-    }
-
-    const entity = await this.repository.updateCantEstDe(id);
-
-    if (!entity) {
-      const error = new Error();
-      error.status = 400;
-      error.message = "Entidad no encontrada";
-      throw error;
-    }
-    return entity;
-  }
-}
-
-module.exports = CourseService;
-```
-
-Implementación en controller donde se intancean los objetos services como repository que actuan como interfaces , en la siguiente imagen se observa la implementacion :
-
-Para mostrar un ejemplo en la clase DataController donde se instancean estos objetos podemos observar que se podemos llamar tanto al Course Service como al base Service y deberiamos obtener el mismo resultado , sin embargo obterner los cursos por profesor solo podemos hacerlo mediante la clase courseService pues es propai de esta
-
-``` javascript
-const CourseService = require("../../aplication/services/course.service");
-const CourseRepository = require("../../domain/repository/course.repository");
-  
-class DataController {
-  async getAllCourses() {
-    var coursesRepository = new CoursesRepository(CoursesDb);
-    var coursesService = new CoursesService(coursesRepository);
-    const result = await coursesService.getAll().catch(err => {
-      console.log("controller Error", err);
-      return null;
-    });
-    return data;
-}
-```
 
 
 
