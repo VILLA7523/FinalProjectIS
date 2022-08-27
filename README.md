@@ -177,7 +177,9 @@ Los módulos que cumplen con el principio abierto-cerrado tienen dos caracterís
  - Cerrado para la modificación: Esto significa que extender el comportamiento de un módulo no debería tener como resultado cambiar el código fuente, es decir, el código original debe permanecer sin cambios.
 
 #### Fragmento de Código
-La siguiente fragmento de código muestra la implementación de la clase Base Service , en la cual se encuentran las funciones crud , cumple con las caracteristica de este principio ya que se puede observar que en la clase baseRepository estan implementadas en la segunda imagen podemos observar que la clases extiende , de la mostrada anteriormente , aqui implementamos funcionalidades propias de esta que la clase base no deberia tener ya que no son para todas :
+La siguiente fragmento de código muestra la implementación de la clase BaseRepository , en la cual se encuentran las funciones crud , cumple con las caracteristica de este principio ya que se puede observar que en la clase baseRepository estan implementadas las funciones crud , que todos nuestros modelos usaran , de esta clase ectendimos más clases en las cuales hay funciones propias de cada repositorio:
+
+En el siguiente fragmento de código podemos observar que los parámetros de las funciones , reciben un objeto , esto con el objetivo de hacer que las funciones sean génericas y cualquier repository que estiendan a ella sean independientes a sus parámetros 
 
 ``` Javascript
 class BaseRepository {
@@ -204,7 +206,65 @@ class BaseRepository {
   }
 }
 ```
-![image](https://user-images.githubusercontent.com/79772873/187010309-e5295fd7-0c57-46e9-8a0c-987b2bdc8d87.png)
+
+En las siguientes imagenes son nuestras implementaciones .repository que extienden del baseRepository:
+
+implementación de loginRepository , como se observa authenticate es propio de login , pues ninguna de las otras clases lo comparte , es por eso que est funcionalidad se desarrolla dentro de la clase porpia de esta 
+
+``` javascript
+const BaseRepository = require("./base.repository");
+
+class LoginRepository extends BaseRepository {
+  constructor(LoginDb) {
+    super(LoginDb);
+  }
+
+  async authenticate(email , password) {
+    return await this.model.authenticate(email , password);
+  }
+}
+
+module.exports = LoginRepository
+```
+
+Implementación de courseStudentsRepository que extiende de BaseRepository 
+
+```
+const BaseRepository = require("./base.repository");
+
+class CourseStudentsRepository extends BaseRepository {
+  constructor(CourseStudentsDb) {
+    super(CourseStudentsDb);
+  }
+  async studentsForCourse(token) {
+    return await this.model.studentsForCourse(token);
+  }
+}
+
+module.exports = CourseStudentsRepository
+```
+
+Implementación de Course que extiende de baseRepository
+
+const BaseRepository = require("./base.repository");
+
+``` javascript
+class CourseRepository extends BaseRepository {
+  constructor(CourseDb) {
+    super(CourseDb);
+  }
+
+  async getAllWithoutPagination() {
+    return await this.model.find();
+  }
+
+  async findByIdProfessor(id) {
+    return await this.model.findByIdProfessor(id);
+  }
+}
+
+module.exports = CourseRepository
+```
 
 
 ### Interface segregation principle(ISP)
