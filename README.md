@@ -229,7 +229,7 @@ module.exports = LoginRepository
 
 Implementación de courseStudentsRepository que extiende de BaseRepository 
 
-```
+```javascript
 const BaseRepository = require("./base.repository");
 
 class CourseStudentsRepository extends BaseRepository {
