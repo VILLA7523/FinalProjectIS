@@ -183,8 +183,7 @@ No se debe obligar a los clientes a depender de métodos que no utilizan. Cuando
 Una clase debe realizar solo las acciones necesarias para cumplir su función. Cualquier otra acción debe eliminarse por completo o moverse a otro lugar si otra Clase podría usarla en el futuro.
 
 #### Fragmento de Código
-
-Implementacion crud en la sigueinte imagen en base repository: 
+Los metodos principales usados para el CRUD estan definidos tanto en base.repository.js como en base.service.js respectivamente.
 
 ![image](https://user-images.githubusercontent.com/79772873/186266190-ee8f3091-9f82-443a-a969-9f538cdccf8f.png)
 
