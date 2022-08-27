@@ -284,7 +284,7 @@ module.exports = CourseStudentsService;
 
 LoginService , se observa que solo esta implementado funciones propias de esta.
 
-```
+``` javascript
 const BaseService = require("./base.service");
 
 class LoginService extends BaseService {
@@ -378,7 +378,7 @@ module.exports = LoginRepository
 
 Implementación de courseStudentsRepository que extiende de BaseRepository 
 
-```javascript
+``` javascript
 const BaseRepository = require("./base.repository");
 
 class CourseStudentsRepository extends BaseRepository {
