@@ -398,6 +398,7 @@ const CourseStudentsService = require("../../aplication/services/courseStudents.
 const CourseStudentsRepository = require("../../domain/repository/courseStudents.repository");
 
 class ProfessorController {
+  //Obtiene todos los profesores
   async getAll() {
     var professorRepository = new ProfessorRepository(professorDb);
     var professorService = new ProfessorService(professorRepository);
@@ -408,7 +409,8 @@ class ProfessorController {
     });
     return data;
   }
-
+  
+  //Buscar profesor por código del profesor
   async findBydCode(code) {
     var professorRepository = new ProfessorRepository(professorDb);
     var professorService = new ProfessorService(professorRepository);
@@ -419,7 +421,8 @@ class ProfessorController {
     });
     return data;
   }
-
+  
+  //Inscribe el estudiante a un curso
   async studentInscription(StudentID, CourseID) {
     var inscriptionRepository = new InscriptionRepository(inscriptionDb);
     var inscriptionService = new InscriptionService(inscriptionRepository);
@@ -430,7 +433,8 @@ class ProfessorController {
     });
     return data;
   }
-
+  
+  //Crea un nuevo horario
   async NuevoHorario(Day, Start, Finish, CourseID) {
     var sheduleRepository = new SheduleRepository(sheduleDb);
     var sheduleService = new SheduleService(sheduleRepository);
@@ -441,7 +445,8 @@ class ProfessorController {
     });
     return data;
   }
-
+  
+  //Obtiene un horario
   async GetHorario(CourseID) {
     var sheduleRepository = new SheduleRepository(sheduleDb);
     var sheduleService = new SheduleService(sheduleRepository);
@@ -452,7 +457,8 @@ class ProfessorController {
     });
     return data;
   }
-
+  
+  //Crea un nuevo curso
   async NuevoCourse(Course_Name, SectionID, TypeID, ProfessorID, NumEst, Semestre) {
     var courseRepository = new CourseRepository(courseDb);
     var courseService = new CourseService(courseRepository);
@@ -464,7 +470,8 @@ class ProfessorController {
 
     return data;
   }
-
+  
+  //Registra un profesor
   async register(
     First_Name,
     Last_Name,
@@ -517,6 +524,7 @@ class ProfessorController {
     return dataLogin;
   }
 
+  //Autentifacación del profesor
   async login(email, password) {
     var loginRepository = new LoginRepository(loginDb);
     var loginService = new LoginService(loginRepository);
@@ -527,7 +535,8 @@ class ProfessorController {
     });
     return dataLogin;
   }
-
+  
+  //Obtiene todos los curso por la identificacion del profesor
   async getAllCourses(id) {
     var courseRepository = new CourseRepository(courseDb);
     var courseService = new CourseService(courseRepository);
@@ -541,6 +550,7 @@ class ProfessorController {
   }
 
 
+  //
   async getProfessorToCourse(token) {
     var professorRepository = new ProfessorRepository(professorDb);
     var professorService = new ProfessorService(professorRepository);
@@ -564,7 +574,8 @@ class ProfessorController {
     });
     return dataStudentsCourse;
   }
-
+  
+  //Elimina un curso por id
   async deleteCourse(id) {
     var courseRepository = new CourseRepository(courseDb);
     var courseService = new CourseService(courseRepository);
@@ -576,7 +587,8 @@ class ProfessorController {
     });
     return data;
   }
-
+  
+  //obtiene un curso por su id
   async getCourse(id) {
     var courseRepository = new CourseRepository(courseDb);
     var courseService = new CourseService(courseRepository);
@@ -589,6 +601,7 @@ class ProfessorController {
     return data;
   }
 
+  //actualiza un curso
   async updateCourse(name, section, type, semestre, id) {
     var courseRepository = new CourseRepository(courseDb);
     var courseService = new CourseService(courseRepository);
