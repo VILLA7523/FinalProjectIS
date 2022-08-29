@@ -629,9 +629,9 @@ module.exports = ProfessorController;
 - Evite las codificaciones. No agregue prefijos ni escriba información.
 
 
-#### Framgmento de código
+#### Fragmento de código
 
-Respetando las reglas de nombre , podemos observar en la sigueinte imagen que el nombre de las funciones como el de las variables no son ambiguas , y son muy descriotivas , encontradas en el dataController para más informacion.
+Respetando las reglas de nombre , podemos observar en la sigueinte imagen que el nombre de las funciones como el de las variables no son ambiguas , y son muy descriptivas , encontradas en el dataController para más informacion.
 
 ``` javascript
 
@@ -950,6 +950,27 @@ module.exports = CourseRepository
 - Aunque las palabras especiales de SQL y los nombres de funciones no distinguen entre mayúsculas y minúsculas, es una práctica común usar mayúsculas para distinguirlos de los nombres de tablas y columnas.
 
 Fragmento de Código
+
+```javascript
+async create({ Course_Name, SectionID, TypeID, ProfessorID, Semestre }) {
+    const con = connectionDb.promise();
+    const data = await con.query(
+      "INSERT INTO course (Course_Name,SectionID,TypeID,ProfessorID,NumEst,Semestre) VALUES (?,?,?,?,?,?)",
+      [Course_Name, SectionID, TypeID, ProfessorID, 0, Semestre]
+    );
+
+    console.log("error", data);
+    return data[0];
+  }
+
+  async getAll() {
+    const con = connectionDb.promise();
+    const data = await con.query(
+      "SELECT * FROM course INNER JOIN section ON course.SectionID = section.SectionID INNER JOIN type ON course.TypeID = type.TypeID"
+    );
+    return data[0];
+  }
+```
 
 ## PRACTICA 11 - PRINCIPIOS SOLID
 ### Principio de inversión de dependencia (DIP)
